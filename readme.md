@@ -44,3 +44,20 @@ Returns a PBKDF2 hash
 * `data` data to hash with.
 * `iterations` number of hashing iterations.
 * `paranoia` zero out the arguments and return data from internal heap. Defaults is true.
+
+***
+
+# Example:
+
+```js
+const bitcoinTS = require("bitcoin-ts");
+const {instantiatePbkdf2} = require("pbkdf2-sha512-wasm");
+const pbkdf2 = await instantiatePbkdf2(await bitcoinTS.instantiateSha512());
+
+const data = Buffer.from("aaaaaaa");
+const salt = Buffer.from("bbbbbbb");
+
+const hash = pbkdf2.pbkdf2Sha512(salt, data, 2048); // Woohoo! you've got a PBKDF2 hash in WASM!
+```
+
+```
