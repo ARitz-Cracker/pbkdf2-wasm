@@ -1,0 +1,23 @@
+{
+	"name": "pbkdf2-sha512-wasm",
+	"version": "0.8.0",
+	"description": "WASM implementation of sha512",
+	"keywords": [
+	],
+	"homepage": "https://github.com/ARitz-Cracker/pbkdf2-sha512-wasm#readme",
+	"bugs": {
+		"url": "https://github.com/ARitz-Cracker/pbkdf2-sha512-wasm/issues"
+	},
+	"license": "CC-BY-SA-4.0",
+	"author": "Aritz Beobide-Cardinal <aritz@aritzcracker.ca>",
+	"main": "node.js",
+	"browser": "browser.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ARitz-Cracker/pbkdf2-sha512-wasm.git"
+	},
+	"dependencies": {
+	},
+	"peerDependencies": {
+	}
+}
