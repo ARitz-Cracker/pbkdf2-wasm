@@ -59,5 +59,3 @@ const salt = Buffer.from("bbbbbbb");
 
 const hash = pbkdf2.pbkdf2Sha512(salt, data, 2048); // Woohoo! you've got a PBKDF2 hash in WASM!
 ```
-
-```
