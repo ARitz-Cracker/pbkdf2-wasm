@@ -1,12 +1,16 @@
 {
-	"name": "pbkdf2-sha512-wasm",
-	"version": "0.8.0",
-	"description": "WASM implementation of sha512",
+	"name": "pbkdf2-wasm",
+	"version": "0.8.0b",
+	"description": "WASM implementation of pbkdf2",
 	"keywords": [
+		"hash",
+		"pbkdf2",
+		"hmac",
+		"wasm"
 	],
-	"homepage": "https://github.com/ARitz-Cracker/pbkdf2-sha512-wasm#readme",
+	"homepage": "https://github.com/ARitz-Cracker/pbkdf2-wasm#readme",
 	"bugs": {
-		"url": "https://github.com/ARitz-Cracker/pbkdf2-sha512-wasm/issues"
+		"url": "https://github.com/ARitz-Cracker/pbkdf2-wasm/issues"
 	},
 	"license": "CC-BY-SA-4.0",
 	"author": "Aritz Beobide-Cardinal <aritz@aritzcracker.ca>",
@@ -14,7 +18,7 @@
 	"browser": "browser.js",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ARitz-Cracker/pbkdf2-sha512-wasm.git"
+		"url": "https://github.com/ARitz-Cracker/pbkdf2-wasm.git"
 	},
 	"dependencies": {
 	},
