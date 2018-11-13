@@ -51,7 +51,7 @@ Returns a PBKDF2 hash
 
 ```js
 const bitcoinTS = require("bitcoin-ts");
-const {instantiatePbkdf2} = require("pbkdf2-sha512-wasm");
+const {instantiatePbkdf2} = require("pbkdf2-wasm");
 const pbkdf2 = await instantiatePbkdf2(await bitcoinTS.instantiateSha512());
 
 const data = Buffer.from("aaaaaaa");
