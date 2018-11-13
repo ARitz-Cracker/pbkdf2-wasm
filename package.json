@@ -1,6 +1,6 @@
 {
 	"name": "pbkdf2-wasm",
-	"version": "0.8.0b",
+	"version": "0.8.0c",
 	"description": "WASM implementation of pbkdf2",
 	"keywords": [
 		"hash",
@@ -21,7 +21,7 @@
 		"url": "https://github.com/ARitz-Cracker/pbkdf2-wasm.git"
 	},
 	"dependencies": {
+		"bitcoin-ts": "^1.4.0"
 	},
-	"peerDependencies": {
-	}
+	"peerDependencies": {}
 }

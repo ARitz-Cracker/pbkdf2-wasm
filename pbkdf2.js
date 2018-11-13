@@ -3,9 +3,9 @@ class pbkdf2 {
 	constructor(pbkdf2Wasm, sha512){
 		this._heapU8 = pbkdf2Wasm.heapU8;
 		pbkdf2Wasm.setSha512Callback((resultPtr, dataPtr, dataLen) => {
-			heapU8.set(
+			this._heapU8.set(
 				sha512.hash(
-					heapU8.subarray(dataPtr,dataPtr + dataLen)
+					this._heapU8.subarray(dataPtr,dataPtr + dataLen)
 				),
 				resultPtr
 			);
@@ -41,7 +41,7 @@ class pbkdf2 {
 		this._setArg1(buffer);
 		
 		this._pbkdf2Wasm.xorStr(this._arg1Ptr, len, val);
-		return this._heapU8.slice(this._arg1Ptr, len);
+		return this._heapU8.slice(this._arg1Ptr, this._arg1Ptr + len);
 	}
 	xorStrs(buffer1, buffer2) {
 		const len = buffer1.length;
@@ -52,15 +52,14 @@ class pbkdf2 {
 		this._setArg2(buffer2);
 
 		this._pbkdf2Wasm.xorStrs(this._arg1Ptr, this._arg2Ptr, len);
-		return this._heapU8.slice(this._arg1Ptr, len);
+		return this._heapU8.slice(this._arg1Ptr, this._arg1Ptr + len);
 	}
 	hmacSha512(salt, data, paranoia = true){
 		this._setArg1(salt);
 		this._setArg2(data);
 
 		this._pbkdf2Wasm.hmacSha512(this._resultPtr, this._arg1Ptr, salt.length, this._arg2Ptr, data.length);
-		const result = this._heapU8.slice(this._resultPtr, 64);
-
+		const result = this._heapU8.slice(this._resultPtr, this._resultPtr + 64);
 		if (paranoia) {
 			this._heapU8.fill(0, this._arg1Ptr, this._arg1Ptr + salt.length);
 			this._heapU8.fill(0, this._arg2Ptr, this._arg2Ptr + data.length);
@@ -73,7 +72,7 @@ class pbkdf2 {
 		this._setArg2(data);
 
 		this._pbkdf2Wasm.pbkdf2Sha512(this._resultPtr, this._arg1Ptr, salt.length, this._arg2Ptr, data.length, iterations);
-		const result = this._heapU8.slice(this._resultPtr, 64);
+		const result = this._heapU8.slice(this._resultPtr, this._resultPtr + 64);
 
 		if (paranoia) {
 			this._heapU8.fill(0, this._arg1Ptr, this._arg1Ptr + salt.length);
@@ -85,6 +84,9 @@ class pbkdf2 {
 }
 
 const instantiatePbkdf2Lib = async (bytes, sha512) => {
+	if (sha512 instanceof Promise){
+		sha512 = await sha512;
+	}
 	if (sha512 == null || (typeof sha512.hash) !== "function" ){
 		throw new TypeError("instantiatePbkdf2Lib: Second argument must be an object with a \"hash\" method");
 	}
