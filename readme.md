@@ -36,6 +36,8 @@ Returns an HMAC hash
 * `data` data to hash with.
 * `paranoia` zero out the arguments and return data from internal heap. Defaults is true.
 
+***
+
 ## Uint8Array pbkdf2Instance.pbkdf2Sha512(Uint8Array key, Uint8Array data, Number iterations[, Boolean paranoia])
 
 Returns a PBKDF2 hash
@@ -44,6 +46,12 @@ Returns a PBKDF2 hash
 * `data` data to hash with.
 * `iterations` number of hashing iterations.
 * `paranoia` zero out the arguments and return data from internal heap. Defaults is true.
+
+***
+
+## pbkdf2Instance.wipeInternalMemory()
+
+Zero out the previous arguments and return data from internal heap. The main purpose of this function is to give the option zero everything out after using the hashing functions consecutively while not clearing the data every single time.
 
 ***
 

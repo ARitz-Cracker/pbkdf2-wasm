@@ -61,9 +61,7 @@ class pbkdf2 {
 		this._pbkdf2Wasm.hmacSha512(this._resultPtr, this._arg1Ptr, salt.length, this._arg2Ptr, data.length);
 		const result = this._heapU8.slice(this._resultPtr, this._resultPtr + 64);
 		if (paranoia) {
-			this._heapU8.fill(0, this._arg1Ptr, this._arg1Ptr + salt.length);
-			this._heapU8.fill(0, this._arg2Ptr, this._arg2Ptr + data.length);
-			this._heapU8.fill(0, this._resultPtr, this._resultPtr + 64);
+			this.wipeInternalMemory();
 		}
 		return result;
 	}
@@ -75,11 +73,14 @@ class pbkdf2 {
 		const result = this._heapU8.slice(this._resultPtr, this._resultPtr + 64);
 
 		if (paranoia) {
-			this._heapU8.fill(0, this._arg1Ptr, this._arg1Ptr + salt.length);
-			this._heapU8.fill(0, this._arg2Ptr, this._arg2Ptr + data.length);
-			this._heapU8.fill(0, this._resultPtr, this._resultPtr + 64);
+			this.wipeInternalMemory();
 		}
 		return result;
+	}
+	wipeInternalMemory() {
+		this._heapU8.fill(0, this._arg1Ptr, this._arg1Ptr + this._arg1Len);
+		this._heapU8.fill(0, this._arg2Ptr, this._arg2Ptr + this._arg2Len);
+		this._heapU8.fill(0, this._resultPtr, this._resultPtr + 64);
 	}
 }
 

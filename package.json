@@ -1,6 +1,6 @@
 {
 	"name": "pbkdf2-wasm",
-	"version": "0.8.0c",
+	"version": "0.8.1",
 	"description": "WASM implementation of pbkdf2",
 	"keywords": [
 		"hash",
