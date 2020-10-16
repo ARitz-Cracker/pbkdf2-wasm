@@ -1,6 +1,6 @@
 {
 	"name": "pbkdf2-wasm",
-	"version": "0.8.2",
+	"version": "0.9.0",
 	"description": "WASM implementation of pbkdf2",
 	"keywords": [
 		"hash",
@@ -12,16 +12,30 @@
 	"bugs": {
 		"url": "https://github.com/ARitz-Cracker/pbkdf2-wasm/issues"
 	},
+	"scripts": {
+		"postinstall": "bash scripts/postinstall.sh"
+	},
 	"license": "CC-BY-SA-4.0",
 	"author": "Aritz Beobide-Cardinal <aritz@aritzcracker.ca>",
-	"main": "node.js",
+	"main": "index.js",
 	"browser": "browser.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ARitz-Cracker/pbkdf2-wasm.git"
 	},
-	"dependencies": {
-		"bitcoin-ts": "^1.4.0"
+	"peerDependencies": {
+		"buffer-lite": "^0.1.4"
 	},
-	"peerDependencies": {}
+	"browserRequirifier": {
+		"include": [
+			"pbkdf2.js",
+			"pbkdf2Wasm.js"
+		],
+		"copyVerbatim": [
+			"bin"
+		]
+	},
+	"dependencies": {
+		"@aritz-cracker/cryptowasm": "^1.18.0"
+	}
 }

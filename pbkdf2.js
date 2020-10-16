@@ -1,3 +1,10 @@
+if(typeof Buffer === "undefined"){
+	try{
+		require("buffer-lite");
+	}catch(ex){
+		// buffer-lite not installed
+	}
+}
 const {instantiatePbkdf2WasmBytes} = require("./pbkdf2Wasm.js");
 class pbkdf2 {
 	constructor(pbkdf2Wasm, sha512){
@@ -41,7 +48,11 @@ class pbkdf2 {
 		this._setArg1(buffer);
 		
 		this._pbkdf2Wasm.xorStr(this._arg1Ptr, len, val);
-		return this._heapU8.slice(this._arg1Ptr, this._arg1Ptr + len);
+		let result = this._heapU8.slice(this._arg1Ptr, this._arg1Ptr + len);
+		if(typeof Buffer !== "undefined"){
+			result = Buffer.from(result.buffer, result.byteOffset, result.byteLength);	
+		}
+		return result;
 	}
 	xorStrs(buffer1, buffer2) {
 		const len = buffer1.length;
@@ -52,16 +63,23 @@ class pbkdf2 {
 		this._setArg2(buffer2);
 
 		this._pbkdf2Wasm.xorStrs(this._arg1Ptr, this._arg2Ptr, len);
-		return this._heapU8.slice(this._arg1Ptr, this._arg1Ptr + len);
+		let result = this._heapU8.slice(this._arg1Ptr, this._arg1Ptr + len);
+		if(typeof Buffer !== "undefined"){
+			result = Buffer.from(result.buffer, result.byteOffset, result.byteLength);
+		}
+		return result;
 	}
 	hmacSha512(salt, data, paranoia = true){
 		this._setArg1(salt);
 		this._setArg2(data);
 
 		this._pbkdf2Wasm.hmacSha512(this._resultPtr, this._arg1Ptr, salt.length, this._arg2Ptr, data.length);
-		const result = this._heapU8.slice(this._resultPtr, this._resultPtr + 64);
+		let result = this._heapU8.slice(this._resultPtr, this._resultPtr + 64);
 		if (paranoia) {
 			this.wipeInternalMemory();
+		}
+		if(typeof Buffer !== "undefined"){
+			result = Buffer.from(result.buffer, result.byteOffset, result.byteLength);
 		}
 		return result;
 	}
@@ -70,10 +88,12 @@ class pbkdf2 {
 		this._setArg2(data);
 
 		this._pbkdf2Wasm.pbkdf2Sha512(this._resultPtr, this._arg1Ptr, salt.length, this._arg2Ptr, data.length, iterations);
-		const result = this._heapU8.slice(this._resultPtr, this._resultPtr + 64);
-
+		let result = this._heapU8.slice(this._resultPtr, this._resultPtr + 64);
 		if (paranoia) {
 			this.wipeInternalMemory();
+		}
+		if(typeof Buffer !== "undefined"){
+			result = Buffer.from(result.buffer, result.byteOffset, result.byteLength);
 		}
 		return result;
 	}
